@@ -1,7 +1,7 @@
 from ftplib import FTP
 import os
 
-ftp = FTP("ftp.dlptest.com")
+ftp = FTP("ftp.dlptest.com",encoding="latin-1")
 ftp.login("dlpuser", "rNrKYTX9g7z3RgJRmxWuGHbeu")
 
 print("Files on server:")
@@ -21,3 +21,4 @@ with open("downloaded.txt", "wb") as f:
     print("File downloaded")
 
 ftp.quit()
+
