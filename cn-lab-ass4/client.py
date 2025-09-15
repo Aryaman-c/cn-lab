@@ -27,7 +27,7 @@ while True:
             frame_data = pickle.loads(data)
             frame = cv2.imdecode(frame_data, cv2.IMREAD_COLOR)
 
-            # ✅ Display video frame
+            # Display video frame
             cv2.imshow("UDP Video Stream", frame)
 
             buffer.clear()
@@ -42,3 +42,4 @@ while True:
 sock.close()
 cv2.destroyAllWindows()
 print("[CLIENT] Streaming finished")
+
