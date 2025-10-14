@@ -1,15 +1,43 @@
 import random
 import time
 
-def stop_and_wait_arq(total_frames=5, loss_prob=0.3):
-    for frame in range(total_frames):
-        print(f"Sending Frame {frame}")
-        # Simulate random frame loss
-        if random.random() < loss_prob:
-            print(f"Frame {frame} lost, retransmitting ...")
-            time.sleep(1)
-            print(f"Resending Frame {frame}")
-        print(f"ACK {frame} received\n")
+def stop_and_wait_arq(total_frames=5, loss_prob=0.3, timeout=2):
+    current_frame = 0
+
+    while current_frame < total_frames:
+        print(f"Sending Frame {current_frame}")
         time.sleep(0.5)
 
-stop_and_wait_arq()
+        # Simulate random frame loss
+        frame_lost = random.random() < loss_prob
+
+        if not frame_lost:
+            # ACK received successfully
+            print(f"ACK {current_frame} received\n")
+            current_frame += 1
+            continue
+        else:
+            print(f"Frame {current_frame} lost")
+
+        # Timeout and retransmission
+        start_time = time.time()
+        ack_received = False
+
+        while not ack_received:
+            if time.time() - start_time > timeout:
+                print(f"Timeout! Retransmitting Frame {current_frame}")
+                time.sleep(0.5)
+                frame_lost = random.random() < loss_prob
+                if not frame_lost:
+                    print(f"ACK {current_frame} received\n")
+                    current_frame += 1
+                    ack_received = True
+                else:
+                    print(f"Frame {current_frame} lost again")
+                    start_time = time.time()
+
+    print("All frames transmitted and acknowledged successfully")
+
+# Run the function
+if __name__ == "__main__":
+    stop_and_wait_arq(total_frames=6, loss_prob=0.3, timeout=2)
