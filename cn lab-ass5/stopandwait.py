@@ -37,7 +37,6 @@ def stop_and_wait_arq(total_frames=5, loss_prob=0.3, timeout=2):
                     start_time = time.time()
 
     print("All frames transmitted and acknowledged successfully")
+    
+stop_and_wait_arq(total_frames=6, loss_prob=0.3, timeout=2)
 
-# Run the function
-if __name__ == "__main__":
-    stop_and_wait_arq(total_frames=6, loss_prob=0.3, timeout=2)
